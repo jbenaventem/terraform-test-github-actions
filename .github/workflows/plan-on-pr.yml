@@ -1,16 +1,27 @@
 name: Plan / Test On PR
 
 on:
-  pull_request:
+  push:
     branches:
       - main
+  pull_request:
 ## workflows called
 jobs:
-  push-on-pullrequest:
+  terraform-ci:
     uses: jbenaventem/wkf-terraform/.github/workflows/terraform-ci.yml@feat/reusable-workflow-tf
     with:
       version: "1.1.6"
       runs-on: "ubuntu-latest"
+    secrets:
+      terraform_token: ${{ secrets.TF_TOKEN}}
+  terraform-cd:
+    if: github.event_name == 'pull_request'
+    uses: jbenaventem/wkf-terraform/.github/workflows/terraform-cd.yml@feat/reusable-workflow-tf
+    with:
+      version: "1.1.6"
+      runs-on: "ubuntu-latest"
+    secrets:
+      terraform_token: ${{ secrets.TF_TOKEN}} 
   tf-sec:
     name: tfsec sarif report
     runs-on: ubuntu-latest
