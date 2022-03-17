@@ -1,17 +1,14 @@
 name: Plan / Test On PR
 
 on:
+  push:
   pull_request:
-    branches:
-      - main
 ## workflows called
 jobs:
-  push-on-pullrequest:
-    uses: santander-group-cto/wkf-terraform/.github/workflows/terraform-ci.yml@feat/reusable-workflow-tf
+  terraform-ci:
+    uses: jbenaventem/wkf-terraform/.github/workflows/terraform-ci.yml@feat/reusable-workflow-tf
     with:
       version: "1.1.6"
       runs-on: "ubuntu-latest"
-
-
-
-
+    secrets:
+      terraform_token: ${{ secrets.TF_TOKEN}}
