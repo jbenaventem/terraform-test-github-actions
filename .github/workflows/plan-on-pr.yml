@@ -15,6 +15,7 @@ jobs:
     secrets:
       terraform_token: ${{ secrets.TF_TOKEN}}
   terraform-cd:
+    needs: [ terraform-ci]
     if: github.event_name == 'pull_request'
     uses: jbenaventem/wkf-terraform/.github/workflows/terraform-cd.yml@feat/reusable-workflow-tf
     with:
