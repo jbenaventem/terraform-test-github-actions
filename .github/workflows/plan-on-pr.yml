@@ -2,8 +2,6 @@ name: Plan / Test On PR
 
 on:
   push:
-    branches:
-      - main
   pull_request:
 ## workflows called
 jobs:
